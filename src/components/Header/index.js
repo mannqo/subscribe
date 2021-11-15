@@ -27,6 +27,5 @@ export default memo(function Header() {
                 </Menu >
             </HashRouter>
         </HeaderWrapper>
-
     )
 })
