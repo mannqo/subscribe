@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Table, Tag, Space } from 'antd';
+import { Table, Tag } from 'antd';
 import { TableWrapper } from './style';
 
 const columns = [
