@@ -1,11 +1,15 @@
-import List from "./components/list";
-import Header from "./components/Header";
+import { HashRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import routes from './router';
+import Header from './components/header'
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <List />
+      <HashRouter>
+        {renderRoutes(routes)}
+      </HashRouter>
     </div>
   );
 }
