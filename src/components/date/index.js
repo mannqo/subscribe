@@ -1,42 +1,51 @@
 import React, { memo } from 'react';
-import { List, Card } from 'antd';
 import { DateWrapper } from './style';
 import { NavLink } from 'react-router-dom';
 
 const data = [
     {
-        content: '11月11日',
+        content: '11.11',
         date: '/subscribe/first'
     },
     {
-        content: '11月12日',
+        content: '11.12',
         date: '/subscribe/second'
     },
     {
-        content: '11月13日',
+        content: '11.13',
         date: '/subscribe/third'
     },
     {
-        content: '11月14日',
+        content: '11.14',
         date: '/subscribe/fourth'
+    },
+    {
+        content: '11.15',
+        date: '/subscribe/fifth'
+    },
+    {
+        content: '11.16',
+        date: '/subscribe/sixth'
+    },
+    {
+        content: '11.17',
+        date: '/subscribe/seventh'
     },
 ];
 
 export default memo(function Date() {
     return (
         <DateWrapper>
-            <List
-                grid={{ gutter: 16, column: 4 }}
-                className="date-list"
-                dataSource={data}
-                renderItem={item => (
-                    <List.Item className="date-list-item">
-                        <NavLink to={item.date}>
-                            <Card>{item.content}</Card>
-                        </NavLink>
-                    </List.Item>
-                )}
-            />
+            {data.map((item) => {
+                return (
+                    <NavLink to={item.date}>
+                        <div className="date-item">
+                            <div>{item.content}</div>
+                            <div>星期天</div>
+                        </div>
+                    </NavLink>
+                )
+            })}
         </DateWrapper>
     )
 })

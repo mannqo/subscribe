@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import { Table, Tag } from 'antd';
+import { Table, InputNumber, Space, Button } from 'antd';
 import { TableWrapper } from './style';
+import { morningDateData, afternoonDateData } from '../../mock/local-data';
 
 const columns = [
     {
@@ -12,13 +13,10 @@ const columns = [
         key: 'status',
         render: status => (
             <>
-                {status.map(status => {
-                    return (
-                        <Tag color='orange' key={status}>
-                            {status}
-                        </Tag>
-                    )
-                })}
+                <Space>
+                    <InputNumber className="subscribeNum" min={1} max={10} defaultValue={1} />
+                    <Button className="rob-button" type="primary" danger>抢</Button>
+                </Space>
             </>
         )
     },
@@ -28,9 +26,7 @@ const columns = [
         render: remain => {
             return (
                 <>
-                    <Tag color='green'>
-                        {remain}
-                    </Tag>
+                    <Button type="primary" block disabled className="list-remain">{remain}</Button>
                 </>
             )
 
@@ -38,26 +34,6 @@ const columns = [
     }
 ];
 
-const data = [
-    {
-        key: '1',
-        time: '8:30-9:00',
-        status: ['完了'],
-        remain: '余号0',
-    },
-    {
-        key: '2',
-        time: '9:00-9:30',
-        status: ['可抢'],
-        remain: '余号10',
-    },
-    {
-        key: '3',
-        time: '9:30-10:00',
-        status: ['可抢'],
-        remain: '余号10',
-    },
-];
 
 
 export default memo(function List() {
@@ -65,11 +41,11 @@ export default memo(function List() {
         <div>
             <TableWrapper>
                 <h3 className='listTitle'>上午</h3>
-                <Table columns={columns} dataSource={data} />
+                <Table className="table-list" columns={columns} dataSource={morningDateData} />
             </TableWrapper>
             <TableWrapper>
                 <h3 className='listTitle'>下午</h3>
-                <Table columns={columns} dataSource={data} />
+                <Table className="table-list" columns={columns} dataSource={afternoonDateData} />
             </TableWrapper>
         </div>
     )

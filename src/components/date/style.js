@@ -1,15 +1,28 @@
 import styled from 'styled-components';
 
 export const DateWrapper = styled.div`
-    .date-list {
-        margin-top: 10px;
+    display: flex;
+    margin: 20px 10px;
+    height: 80px;
+    justify-content: space-between;
+    overflow: auto;
+    ::-webkit-scrollbar {
+        display: none;
     }
-    .date-list-item {
+    .active .date-item {
+        background-color: rgb(251, 91, 51);
+    }
+    .date-item {
         text-align: center;
-        padding: 24px 0;
-        .active .ant-card-bordered{
-            background-color: #f0f0f0;
-        }
+        padding-top: 16px;
+        
+        color: #fff;
+        font-weight: 600;
+
+        margin-right: 10px;
+        width: 70px;
+        height: 100%;
+        border-radius: 10px;
+        background-color: rgb(240, 194, 34);
     }
-    
 `

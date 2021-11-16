@@ -8,6 +8,15 @@ export const TableWrapper = styled.div`
         padding-left: 10px;
         border-left: 5px solid orange;
     }
+    .table-list {
+        .subscribeNum {
+            width: 50px;
+        }
+        .list-remain {  
+            color: #fff;
+            background-color: #1890ff;
+        }
+    }
     .ant-table-thead {
         display: none;
     }
