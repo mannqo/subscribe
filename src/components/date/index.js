@@ -39,7 +39,7 @@ export default memo(function Date() {
             {data.map((item) => {
                 return (
                     <NavLink to={item.date}>
-                        <div className="date-item">
+                        <div className="date-item" key={item.date}>
                             <div>{item.content}</div>
                             <div>星期天</div>
                         </div>
