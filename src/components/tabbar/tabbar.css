@@ -1,0 +1,27 @@
+.h_tabbar {
+    display: flex;
+    /* border-bottom: 1px solid #f0f0f0; */
+    border-top: 1px solid #f0f0f0;
+    line-height: 38px;
+}
+
+.h_tabitem {
+    flex: 1;
+    text-align: center;
+    background-color: rgba(247, 247, 247, 0.466);
+    transition: all 0.1s;
+    border-right: 1px solid #f0f0f0;
+    color: rgb(92, 92, 92);
+}
+.h_tabitem:last-child{
+    border: none;
+}
+
+.h_tabitem:hover {
+    background-color: #94bbecce;
+}
+
+.h_tabbar .active {
+    background-color: #94bbec;
+    color: #000;
+}

@@ -38,7 +38,7 @@ export default memo(function Date() {
         <DateWrapper>
             {data.map((item) => {
                 return (
-                    <NavLink to={item.date}>
+                    <NavLink to={item.date} key={item.date}>
                         <div className="date-item" key={item.date}>
                             <div>{item.content}</div>
                             <div>星期天</div>
