@@ -1,9 +1,15 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
+import Tabbar from '../../components/tabbar'
+import Tickets from '../../components/tickets'
 
 export default memo(function Infor() {
+    let [index, changeIndex] = useState(0)
+
     return (
         <div>
-            信息查询...
+            <Tabbar sendIndex={changeIndex} />
+            <Tickets index={index} />
         </div>
     )
 })
+                                                                         

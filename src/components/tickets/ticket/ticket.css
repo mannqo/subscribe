@@ -1,0 +1,45 @@
+.h_tickets {
+    display: flex;
+    /* background-color: pink; */
+    width: 100%;
+    /* justify-content: space-between; */
+}
+
+.item:nth-child(1) {
+    flex: 2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.item:nth-child(2) {
+    flex: 3;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.item:nth-child(3) {
+    flex: 1.6;
+    text-align: right;
+}
+
+
+
+.h_tickets .hight_light1 {
+    color: #0b8235;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.h_tickets .hight_light2 {
+    color: rgb(218, 0, 0);
+    display: inline-block;
+    font-weight: bold;
+}
+
+.h_tickets .hight_light3 {
+    color: rgb(104, 104, 104);
+    display: inline-block;
+    font-weight: bold;
+}
