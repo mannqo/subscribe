@@ -9,12 +9,20 @@ export const TableWrapper = styled.div`
         border-left: 5px solid orange;
     }
     .table-list {
-        .subscribeNum {
+        .appointmentNum {
             width: 50px;
         }
         .list-remain {  
             color: #fff;
             background-color: #1890ff;
+        }
+        .form-list { 
+            display: flex;
+            flex: 1;
+            justify-content: center;  
+            .form-item { 
+                transform: translateY(14px);
+            }
         }
     }
     .ant-table-thead {

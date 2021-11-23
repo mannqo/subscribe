@@ -1,51 +1,75 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { DateWrapper } from './style';
 import { NavLink } from 'react-router-dom';
+import { getSubscribeDay } from '../../services/date';
 
-const data = [
-    {
-        content: '11.11',
-        date: '/subscribe/first'
-    },
-    {
-        content: '11.12',
-        date: '/subscribe/second'
-    },
-    {
-        content: '11.13',
-        date: '/subscribe/third'
-    },
-    {
-        content: '11.14',
-        date: '/subscribe/fourth'
-    },
-    {
-        content: '11.15',
-        date: '/subscribe/fifth'
-    },
-    {
-        content: '11.16',
-        date: '/subscribe/sixth'
-    },
-    {
-        content: '11.17',
-        date: '/subscribe/seventh'
-    },
-];
 
-export default memo(function Date() {
+const dateLink = ['/subscribe/1', '/subscribe/2',
+    '/subscribe/3', '/subscribe/4', '/subscribe/5',
+    '/subscribe/6', '/subscribe/7'];
+
+export default memo(function Date(props) {
+    const { changeDay } = props;
+    const initialData = [
+        {
+            day: '11.21',
+            week: '星期日',
+        },
+        {
+            day: '11.22',
+            week: '星期一',
+        },
+        {
+            day: '11.23',
+            week: '星期二',
+        },
+        {
+            day: '11.24',
+            week: '星期三',
+        },
+        {
+            day: '11.25',
+            week: '星期四',
+        },
+        {
+            day: '11.26',
+            week: '星期五',
+        },
+        {
+            day: '11.27',
+            week: '星期六',
+        },
+    ];
+
+    const [sevenDay, setSevenDay] = useState(' ');
+    const [data, setData] = useState(initialData);
+
+    // eslint-disable-next-line
+    useEffect(async () => {
+        changeDay(window.location.href[window.location.href.length - 1]);
+        const getSevenDay = await getSubscribeDay();
+        const data = getSevenDay.data.splice(0);
+        setSevenDay(data[0].day + '-' + data[6].day);
+        data.map(item => item.day = item.day.slice(5, 10));
+        setData(data);
+    }, []) // eslint-disable-line
+
     return (
         <DateWrapper>
-            {data.map((item) => {
-                return (
-                    <NavLink to={item.date}>
-                        <div className="date-item" key={item.date}>
-                            <div>{item.content}</div>
-                            <div>星期天</div>
-                        </div>
-                    </NavLink>
-                )
-            })}
+            <h2>{sevenDay}</h2>
+            <div className="date-list">
+                {data.map((item, index) => {
+                    return (
+                        <NavLink to={dateLink[index]} key={item.day}>
+                            <div className="date-item" onClick={() => changeDay(index + 1)}>
+                                <div>{item.day}</div>
+                                <div>{item.week}</div>
+                            </div>
+                        </NavLink>
+                    )
+                })}
+            </div>
         </DateWrapper>
+
     )
 })
