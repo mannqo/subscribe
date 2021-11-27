@@ -1,6 +1,7 @@
 import { Redirect } from 'react-router';
 import Subscribe from '../pages/subscribe';
 import Infor from '../pages/infor'; 
+import EntryNo from '../pages/EntryNo';
 
 // eslint-disable-next-line
 export default [
@@ -25,5 +26,9 @@ export default [
     {
         path: "/infor",
         component: Infor,
+    },
+    {
+        path: "/entryNo",
+        component: EntryNo,
     }
 ]

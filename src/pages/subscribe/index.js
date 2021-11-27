@@ -15,7 +15,7 @@ export default memo(function Subscribe() {
         setLoading(true);
         const getTime = await getSubscribeTime(day);
         setLoading(false);
-
+        console.log(1);
         const { orderTimes, date } = getTime.data;
 
         // eslint-disable-next-line 
