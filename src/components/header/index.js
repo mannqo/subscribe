@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Menu } from 'antd';
 import { MailOutlined, AppstoreOutlined, UserOutlined } from '@ant-design/icons';
 import { HeaderWrapper } from './style';
@@ -7,6 +7,18 @@ import { NavLink } from 'react-router-dom';
 
 export default memo(function Header() {
     const [current, setCurrent] = useState('subscribe');
+    useEffect(() => {
+        console.log(window.location.hash);
+        let hash = window.location.hash
+        if (hash.search('subscribe') !== -1 && current !== 'subscribe') {
+            setCurrent('subscribe')
+            return
+        }
+        if (hash.search('infor') !== -1 && current !== 'check') {
+            setCurrent('check')
+            return
+        }
+    }, [current])
     return (
         <HeaderWrapper>
             <h3>欢迎来到gdut财务处预约系统</h3>
@@ -14,13 +26,10 @@ export default memo(function Header() {
                 selectedKeys={[current]} mode="horizontal"
             >
                 <Menu.Item key="subscribe" icon={<MailOutlined />}>
-                    <NavLink to="/subscribe">预约</NavLink>
+                    <NavLink to="/main/subscribe">预约</NavLink>
                 </Menu.Item>
                 <Menu.Item key="check" icon={<AppstoreOutlined />} >
-                    <NavLink to="/infor">信息查询</NavLink>
-                </Menu.Item>
-                <Menu.Item key="mine" icon={<UserOutlined />}>
-                    <NavLink to="/mine">我的</NavLink>
+                    <NavLink to="/main/infor">信息查询</NavLink>
                 </Menu.Item>
             </Menu >
         </HeaderWrapper>

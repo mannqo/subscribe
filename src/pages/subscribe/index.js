@@ -1,7 +1,6 @@
 import List from '../../components/list';
 import Date from '../../components/date';
 import React, { memo, useState } from 'react';
-
 import { getSubscribeTime } from '../../services/date';
 import { initialAllDateData } from '../../mock/local-data';
 
@@ -26,7 +25,7 @@ export default memo(function Subscribe() {
             else item.status = 1;
             item.remain = '余号' + (item.number - item.count);
         })
-        
+
         setDay(day);
         setDate(date.split('-').join('.'));
         setAllDateData(orderTimes);

@@ -1,4 +1,5 @@
 import { Redirect } from 'react-router';
+import Main from '../pages/main';
 import Subscribe from '../pages/subscribe';
 import Infor from '../pages/infor';
 import EntryNo from '../pages/EntryNo';
@@ -12,33 +13,46 @@ export default [
         path: "/",
         exact: true,
         render: () => (
-            <Redirect to="/subscribe" />
+            <Redirect to="/main" />
         )
     },
     {
-        path: "/subscribe",
-        exact: true,
-        render: () => (
-            <Redirect to={"/subscribe/1"} />
-        )
+        path: '/main',
+        component: Main,
+        childrenR: [
+            {
+                path: "/main",
+                exact: true,
+                render: () => (
+                    <Redirect to={"/main/subscribe/1"} />
+                )
+            }, {
+                path: "/main/subscribe",
+                exact: true,
+                render: () => (
+                    <Redirect to={"/main/subscribe/1"} />
+                )
+            },
+            {
+                path: "/main/subscribe",
+                component: Subscribe,
+            },
+            {
+                path: "/main/infor",
+                component: Infor,
+            },
+        ]
     },
-    {
-        path: "/subscribe",
-        component: Subscribe,
-    },
-    {
-        path: "/infor",
-        component: Infor,
-    },
+
     {
         path: "/entryNo",
         component: EntryNo,
     },
     {
         path: "/report",
-        exact:true,
+        exact: true,
         component: Report
-    }, 
+    },
     {
         path: "/report/lineup",
         component: LineUp
