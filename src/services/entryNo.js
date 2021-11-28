@@ -1,9 +1,10 @@
-import request from "../request";
-import qs from 'qs'
+import request from "./axios";
+
+/**
+ * @description 预约请求
+ * @param {*} options 接受 id，处理单号，学工号 
+ */
 export function getOrderEntry(options) {
-    console.log(options);
-    // type 类型
-    // date 日期
     return request({
         method: 'post',
         url: '/appointment/Entry',
@@ -13,6 +14,10 @@ export function getOrderEntry(options) {
         data: options
     })
 }
+/**
+ * @description 获取微信相关配置
+ * @param {*} options 当前 url
+ */
 export const getWxKey = (options) => {
     return request({
         method: 'get',

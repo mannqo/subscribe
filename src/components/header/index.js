@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect } from 'react';
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined, UserOutlined } from '@ant-design/icons';
+import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
 import { HeaderWrapper } from './style';
 import { NavLink } from 'react-router-dom';
 
