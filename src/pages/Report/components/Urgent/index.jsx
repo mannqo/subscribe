@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { Form, Button, message, InputNumber } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import styled from 'styled-components';
-import { getUrgent } from '../../../../apis/report'
+import { getUrgent } from '../../../../services/report'
 import { useHistory } from 'react-router-dom';
 import { BackButton, CoverContainer, Title } from '../../style';
 const Urgent = () => {
@@ -13,8 +12,8 @@ const Urgent = () => {
         setUrgentLoading(true)
         try {
             // 发送请求
-            const { data } = await getUrgent(values)
-            data.code === 0 ? message.success(data.message) : message.error(data.message)
+            const data = await getUrgent(values)
+            data.code === 1 ? message.success(data.message) : message.error(data.message)
         } catch (error) {
             message.error(error)
         } finally {

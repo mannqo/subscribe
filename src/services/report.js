@@ -1,10 +1,7 @@
-import request from "../request";
-
-
+import request from "./axios";
 /**
  * @description 预约报道接口
  * @param {*} options 接收 userId
- * @return {*}  Promise
  */
 export function getCover(options) {
     return request({
@@ -20,9 +17,7 @@ export function getCover(options) {
 
 /**
  * @description 现场排队请求
- * @export
- * @param {*} options
- * @return {*}  
+ * @param {*} options userId
  */
 export function getLineUp(options) {
     return request({
@@ -39,7 +34,7 @@ export function getLineUp(options) {
 /**
  * @description 加急请求
  * @export
- * @param {*} options
+ * @param {*} options userId
  * @return {*}  
  */
 export function getUrgent(options) {
