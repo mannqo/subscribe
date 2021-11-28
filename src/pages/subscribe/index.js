@@ -1,4 +1,3 @@
-import Header from '../../components/header';
 import List from '../../components/list';
 import Date from '../../components/date';
 import React, { memo, useState } from 'react';
@@ -34,7 +33,6 @@ export default memo(function Subscribe() {
 
     return (
         <>
-            <Header></Header>
             <Date changeDay={changeDay} />
             <List timeState={timeState} />
         </>
