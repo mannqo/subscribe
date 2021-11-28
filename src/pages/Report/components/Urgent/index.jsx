@@ -13,7 +13,12 @@ const Urgent = () => {
         try {
             // 发送请求
             const data = await getUrgent(values)
-            data.code === 0 ? message.success(data.message) : message.error(data.message)
+            if (data.code === 0) {
+                message.success(data.message)
+                history.push('/report/result')
+            } else {
+                message.error(data.message)
+            }
         } catch (error) {
             message.error(error)
         } finally {
