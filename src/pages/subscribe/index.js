@@ -1,3 +1,4 @@
+import Header from '../../components/header';
 import List from '../../components/list';
 import Date from '../../components/date';
 import React, { memo, useState } from 'react';
@@ -8,15 +9,13 @@ import { message } from 'antd';
 
 
 export default memo(function Subscribe() {
-    const [loading, setLoading] = useState(false);
-    const [timeState, setTimeState] = useState({ allDateData: initialAllDateData, date: '2021.1.1', day: 1 });
+    const [timeState, setTimeState] = useState({ allDateData: initialAllDateData, date: '2021.1.1', day: 1, loading: false });
 
     const changeDay = async (day) => {
         try {
-            setLoading(true);
+            setTimeState(state => ({ ...state, loading: true }));
             const getTime = await getSubscribeTime(day);
             const { orderTimes, date } = getTime.data;
-            setLoading(false);
 
             // eslint-disable-next-line 
             orderTimes.map(item => {
@@ -26,18 +25,19 @@ export default memo(function Subscribe() {
                 else item.status = 1;
                 item.remain = '余号' + (item.number - item.count);
             })
-            setTimeState({ allDateData: orderTimes, date, day });
+            setTimeState({ allDateData: orderTimes, date, day, loading: false });
 
         } catch (err) {
-            setLoading(false);
+            setTimeState({ loading: false });
             message.error('发生错误了', err);
         }
     }
 
     return (
         <>
+            <Header></Header>
             <Date changeDay={changeDay} />
-            <List timeState={timeState} loading={loading} />
+            <List timeState={timeState} />
         </>
     )
 })

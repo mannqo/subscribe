@@ -6,8 +6,8 @@ import ItemAppoint from './item-appoint';
 
 
 export default memo(function List(props) {
-    const { timeState, loading } = props;
-    const { allDateData, date, day } = timeState;
+    const { timeState } = props;
+    const { allDateData, date, day, loading } = timeState;
 
     const columns = [
         {
