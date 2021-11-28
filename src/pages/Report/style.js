@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
+
 const CoverContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -13,6 +14,7 @@ const Title = styled.h1`
     font-weight: 600;
     margin: 50px 0px 100px 0;
 `
+
 const BackButton = styled(Button).attrs({
     type: "primary"
 })`
@@ -20,6 +22,7 @@ const BackButton = styled(Button).attrs({
     top: 10px;
     left: 10px;
 `
+
 export {
     CoverContainer,
     Title,

@@ -1,6 +1,6 @@
 // 这是一个独立的页面
 import React, { useState, useEffect } from 'react';
-import {Result} from 'antd'
+import { Result } from 'antd'
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs'
@@ -8,6 +8,7 @@ const Report = () => {
     const history = useHistory()
     const { location } = useHistory()
     const [isDue, setIsDue] = useState(false)
+    
     useEffect(() => {
         const params = parseInt(location.search.split('=')[1])
         const trueParams = (params + 3) / 2
@@ -17,17 +18,18 @@ const Report = () => {
             alert('二维码已过期')
         }
     }, [location.search])
+
     return (
         <div>
             {
                 isDue
                     ? <Result
-                    status="404"
-                    title="404"
-                    subTitle="Sorry, the page you visited does not exist."
-                  />
+                        status="404"
+                        title="404"
+                        subTitle="Sorry, the page you visited does not exist."
+                    />
                     : <LinkContainer>
-                         <h2>请选择业务</h2>
+                        <h2>请选择业务</h2>
                         <LinkBox onClick={() => { history.push({ pathname: "/report/lineup" }) }} >排队</LinkBox>
                         <LinkBox onClick={() => { history.push({ pathname: "/report/cover" }) }} >报道</LinkBox>
                         <LinkBox onClick={() => { history.push({ pathname: "/report/urgent" }) }} >加急</LinkBox>

@@ -13,7 +13,7 @@ export default memo(function ItemAppoint(props) {
     }
     const getAppointmentRes = async (timeId) => {
         try {
-            const appoint = await getAppointment('3', timeId, date, appointmentNum);
+            const appoint = await getAppointment('1', timeId, date, appointmentNum);
             if (appoint.data && appoint.data.length && appoint.message === '全部预约成功') {
                 Modal.info({
                     title: '预约成功',

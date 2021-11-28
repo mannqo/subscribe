@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, message, InputNumber } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { getUrgent } from '../../../../services/report'
@@ -8,6 +8,7 @@ const Urgent = () => {
     const [urgentLoading, setUrgentLoading] = useState(false)
     const history = useHistory()
     const [form] = useForm()
+    
     const handleFinish = async (values) => {
         setUrgentLoading(true)
         try {

@@ -10,6 +10,7 @@ const Cover = () => {
     const [orderLoading, setOrderLoading] = useState(false)
     const [form] = useForm()
     const history = useHistory()
+
     const handleFinish = async (values) => {
         setOrderLoading(true)
         try {
@@ -42,7 +43,6 @@ const Cover = () => {
                 wrapperCol={{
                     span: 16,
                 }}
-
             >
                 <Form.Item
                     name="userId"

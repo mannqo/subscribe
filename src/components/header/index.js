@@ -19,9 +19,9 @@ export default memo(function Header() {
                 <Menu.Item key="check" icon={<AppstoreOutlined />} >
                     <NavLink to="/infor">信息查询</NavLink>
                 </Menu.Item>
-                <Menu.Item key="mine" icon={<UserOutlined />}>
+                {/* <Menu.Item key="mine" icon={<UserOutlined />}>
                     <NavLink to="/mine">我的</NavLink>
-                </Menu.Item>
+                </Menu.Item> */}
             </Menu >
         </HeaderWrapper>
     )

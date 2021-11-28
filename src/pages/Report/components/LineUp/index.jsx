@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, message, InputNumber } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import {  getLineUp } from '../../../../services/report'
+import { getLineUp } from '../../../../services/report'
 import { BackButton, CoverContainer, Title } from '../../style';
 import { useHistory } from 'react-router-dom';
 
@@ -10,11 +10,12 @@ const LineUp = () => {
     const [lineLoading, setLineLoading] = useState(false)
     const history = useHistory()
     const [form] = useForm()
-    const handleFinish = async(values) => {
+
+    const handleFinish = async (values) => {
         setLineLoading(true)
         try {
             // 发送请求
-            const  data  = await getLineUp(values)
+            const data = await getLineUp(values)
             if (data.code === 0) {
                 message.success(data.message)
                 history.push('/report/result')
@@ -26,7 +27,8 @@ const LineUp = () => {
         } finally {
             setLineLoading(false)
         }
-    } 
+    }
+
     return (
         <CoverContainer>
             <BackButton onClick={() => history.push('/report')}>返回</BackButton>
@@ -41,7 +43,6 @@ const LineUp = () => {
                 wrapperCol={{
                     span: 16,
                 }}
-
             >
                 <Form.Item
                     name="userId"

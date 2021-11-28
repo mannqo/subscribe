@@ -6,11 +6,11 @@ import { getOrderEntry, getWxKey } from '../../../../services/entryNo'
 import wx from 'weixin-js-sdk'
 import { useHistory } from 'react-router-dom';
 const InputForm = ({ id, type, orderNumber, principalId }) => {
-    
     // 变量定义
     const [orderLoading, setOrderLoading] = useState(false)
     const [form] = useForm();
     const history = useHistory()
+
     useEffect(() => {
         if (type === 1) {
             form.setFieldsValue({
@@ -19,6 +19,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
             })
         }
     })
+
     // 操作函数
     const openCamera = async () => {
         const data = await getWxKey({ url: window.location.href.split('#')[0] })
@@ -53,7 +54,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
         setOrderLoading(true)
         try {
             const data = await getOrderEntry(requestParams)
-            const { code, message:msg } = data
+            const { code, message: msg } = data
             console.log(msg);
             if (code === 0) {
                 message.success(msg)
@@ -69,6 +70,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
             setOrderLoading(false)
         }
     }
+    
     return (
         <>
             <Form

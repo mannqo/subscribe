@@ -5,9 +5,6 @@ import request from "./axios";
  * @param {*} options 接受 id，处理单号，学工号 
  */
 export function getOrderEntry(options) {
-
-    // type 类型
-    // date 日期
     return request({
         method: 'post',
         url: '/appointment/Entry',

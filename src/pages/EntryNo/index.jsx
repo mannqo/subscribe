@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import InputForm from './components/InputForm';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Result, Button } from 'antd'
-const EntryNo = ({ match }) => {
+const EntryNo = () => {
     const location = useLocation()
     const history = useHistory()
-    console.log(location.state);
     const { id, type, orderNumber, principalId } = location.state || { id: 5, type: 0, principalId: 222, orderNumber: 378926 }
     const [result, setResult] = useState(false)
+
     useEffect(() => {
         type === 2 && setResult(true)
     }, [type])
+
     return (
         <EntryNoContainer>
             {
