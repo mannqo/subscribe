@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, message, InputNumber } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import styled from 'styled-components';
-import { getCover, getLineUp } from '../../../../apis/report'
+import {  getLineUp } from '../../../../services/report'
 import { BackButton, CoverContainer, Title } from '../../style';
 import { useHistory } from 'react-router-dom';
 
@@ -15,7 +14,7 @@ const LineUp = () => {
         setLineLoading(true)
         try {
             // 发送请求
-            const { data } = await getLineUp(values)
+            const  data  = await getLineUp(values)
             data.code === 1 ? message.success(data.message) : message.error(data.message)
         } catch (error) {
             message.error(error)

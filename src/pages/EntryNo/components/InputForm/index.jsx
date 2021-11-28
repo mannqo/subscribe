@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, InputNumber ,Result} from 'antd';
+import { Form, Input, Button, message, InputNumber } from 'antd';
 import { InstagramOutlined } from '@ant-design/icons'
 import { useForm } from 'antd/lib/form/Form';
-import { getOrderEntry, getWxKey } from '../../../../apis/entryNo';
-import Quagga from 'quagga'
+import { getOrderEntry, getWxKey } from '../../../../services/entryNo'
 import wx from 'weixin-js-sdk'
-const InputForm = ({ id, type, orderNumber,principalId }) => {
+import { useHistory } from 'react-router-dom';
+const InputForm = ({ id, type, orderNumber, principalId }) => {
+    
     // 变量定义
     const [orderLoading, setOrderLoading] = useState(false)
     const [form] = useForm();
-    console.log(type);
+    const history = useHistory()
     useEffect(() => {
         if (type === 1) {
-            console.log(111);
             form.setFieldsValue({
                 orderNumber,
                 principalId
@@ -22,7 +22,7 @@ const InputForm = ({ id, type, orderNumber,principalId }) => {
     // 操作函数
     const openCamera = async () => {
         const data = await getWxKey({ url: window.location.href.split('#')[0] })
-        const { appId, timestamp, nonceStr, jsKey: signature } = data.data.data
+        const { appId, timestamp, nonceStr, jsKey: signature } = data.data
         wx.config({
             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId, // 必填，公众号的唯一标识
@@ -52,15 +52,18 @@ const InputForm = ({ id, type, orderNumber,principalId }) => {
         const requestParams = { ...params, userId: 2, orderNumber: parseInt(params.orderNumber) }
         setOrderLoading(true)
         try {
-            const { data } = await getOrderEntry(requestParams)
-            const code = data.code
-            if (code === 200) {
-                message.success('预约号录入成功')
+            const data = await getOrderEntry(requestParams)
+            const { code, message:msg } = data
+            console.log(msg);
+            if (code === 0) {
+                message.success(msg)
                 form.resetFields()
+                history.push('/infor')
             } else {
-                throw Error('录入失败')
+                message.error(msg)
             }
         } catch (error) {
+            console.log(error.message);
             message.error('录入失败，请重试！')
         } finally {
             setOrderLoading(false)
@@ -68,7 +71,7 @@ const InputForm = ({ id, type, orderNumber,principalId }) => {
     }
     return (
         <>
-         <Form
+            <Form
                 initialValues={{
                     id
                 }}
