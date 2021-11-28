@@ -6,6 +6,7 @@ import {
 import './ticket.css'
 export default withRouter(function Ticket(props) {
     let { id, time, clock } = props.data
+    console.log(props.data);
     return (
         <div className="h_tickets" to="/subscribe" onClick={() => props.history.push({ pathname: '/entryNo', state: { type: props.type, id } })}>
             <div className="item">单号&nbsp;:&nbsp;{id}</div>

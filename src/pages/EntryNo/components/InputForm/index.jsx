@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, InputNumber } from 'antd';
-import { InstagramOutlined, UserOutlined } from '@ant-design/icons'
+import { Form, Input, Button, message, InputNumber ,Result} from 'antd';
+import { InstagramOutlined } from '@ant-design/icons'
 import { useForm } from 'antd/lib/form/Form';
 import { getOrderEntry, getWxKey } from '../../../../apis/entryNo';
 import Quagga from 'quagga'
 import wx from 'weixin-js-sdk'
-const InputForm = ({ id, type }) => {
+const InputForm = ({ id, type, orderNumber,principalId }) => {
     // 变量定义
     const [orderLoading, setOrderLoading] = useState(false)
-    const [done, setDone] = useState(null)
     const [form] = useForm();
+    console.log(type);
+    useEffect(() => {
+        if (type === 1) {
+            console.log(111);
+            form.setFieldsValue({
+                orderNumber,
+                principalId
+            })
+        }
+    })
     // 操作函数
     const openCamera = async () => {
         const data = await getWxKey({ url: window.location.href.split('#')[0] })
         const { appId, timestamp, nonceStr, jsKey: signature } = data.data.data
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId, // 必填，公众号的唯一标识
             timestamp, // 必填，生成签名的时间戳
             nonceStr, // 必填，生成签名的随机串
             signature,// 必填，签名
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
         });
-
         wx.ready(() => {
             wx.scanQRCode({
                 needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -37,11 +45,7 @@ const InputForm = ({ id, type }) => {
                 }
             })
         })
-
-
     }
-
-
     // 成功回调
     const handleFinish = async (params) => {
         // userId，前面传过来，预约号不用传
@@ -64,9 +68,7 @@ const InputForm = ({ id, type }) => {
     }
     return (
         <>
-            {/* <div style={{ width: "500px", height: "500px" }} id="yourElement">
-            </div> */}
-            <Form
+         <Form
                 initialValues={{
                     id
                 }}
@@ -74,17 +76,15 @@ const InputForm = ({ id, type }) => {
                 layout="horizontal"
                 form={form}
                 labelCol={{
-                    span: 3,
+                    span: 10,
                 }}
                 wrapperCol={{
-                    span: 16,
+                    span: 20,
                 }}
-
             >
                 <Form.Item
                     name="id"
                     label="预约号（id）"
-                // hidden={true}
                 >
                     <Input
                         disabled={true}
@@ -103,25 +103,23 @@ const InputForm = ({ id, type }) => {
                             message: '处理单号不能为空噢！'
                         }
                     ]}
+                // labelCol={{}}
                 // 控制台会警告，但是没有问题，这是因为验证失败给的警告
                 >
                     <Input
                         style={{ width: "100%" }}
                         placeholder="请输入你需要处理的单号"
-                        suffix={
-                            <InstagramOutlined style={{ fontSize: "24px", padding: "0px 5px" }} onClick={() => openCamera()} />
-                        }
+                        addonAfter={<InstagramOutlined style={{ fontSize: "24px", }} onClick={() => openCamera()} />}
                     />
                 </Form.Item>
                 <Form.Item
                     name="principalId"
                     label="负责人学工号"
                     tooltip="处理的事务属于谁名下，填谁的！"
-
                     rules={[
                         {
                             required: true,
-                            message: '处理单号不能为空噢！'
+                            message: '学工号不能为空噢！'
                         },
                         {
                             type: 'number',
@@ -133,7 +131,7 @@ const InputForm = ({ id, type }) => {
                 </Form.Item>
                 <Form.Item
                     wrapperCol={{
-                        offset: 8,
+                        offset: 9,
                         span: 16,
                     }}
                 >
@@ -141,6 +139,7 @@ const InputForm = ({ id, type }) => {
                         type="primary"
                         htmlType="submit"
                         loading={orderLoading}
+                        size='large'
                     >
                         提交
                     </Button>
