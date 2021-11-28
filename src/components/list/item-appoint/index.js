@@ -12,7 +12,7 @@ export default memo(function ItemAppoint(props) {
         setAppointmentNum(num);
     }
     const getAppointmentRes = async (timeId) => {
-        const appoint = await getAppointment('3', timeId, date, appointmentNum);
+        const appoint = await getAppointment('1', timeId, date, appointmentNum);
         if (appoint.data.length && appoint.message === '全部预约成功') {
             changeDay(day);
             Modal.info({

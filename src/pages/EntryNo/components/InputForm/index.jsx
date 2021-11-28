@@ -49,7 +49,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
     // 成功回调
     const handleFinish = async (params) => {
         // userId，前面传过来，预约号不用传
-        const requestParams = { ...params, userId: 2, orderNumber: parseInt(params.orderNumber) }
+        const requestParams = { ...params, userId: 1, orderNumber: parseInt(params.orderNumber) }
         setOrderLoading(true)
         try {
             const data = await getOrderEntry(requestParams)

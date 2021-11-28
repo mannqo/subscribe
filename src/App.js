@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <HashRouter>
-        <Header />
+        {/* <Header /> */}
         {renderRoutes(routes)}
       </HashRouter>
     </div>
