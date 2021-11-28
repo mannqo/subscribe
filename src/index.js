@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './assets/css/reset.css'
 import App from './App';
 // 模拟请求数据
-import './mock/index'
+// import './mock/index'
 
 ReactDOM.render(
   <React.StrictMode>

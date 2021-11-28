@@ -1,24 +1,22 @@
 import { memo, useEffect, useState } from 'react'
 import { List } from 'antd';
 import Ticket from './ticket'
-import { getTickets } from '../../apis/getTickets/index'
+import { getTickets } from '../../services/getTickets'
 
 export default memo(function Tickets(props) {
 
     let [isLoading, switchIsLoading] = useState(true)
     let [list, updataList] = useState([])
-    useEffect(() => {
-        console.log('请求', props.index)
-        switchIsLoading(true)
-        updataList([])
-        getTickets(props.index).then(res => {
-            console.log('res=', res);
-            switchIsLoading(false)
-            updataList(res.data.data.list)
-        }).catch(err => {
-            switchIsLoading(false)
-            console.log('err=', err);
-        })
+
+    // eslint-disable-next-line
+    useEffect(async () => {
+        console.log('请求', props.index);
+        switchIsLoading(true);
+        updataList([]);
+        let data = await getTickets(props.index, '1');
+        console.log(data);
+        switchIsLoading(false);
+        updataList(data.data);
 
         // eslint-disable-next-line
     }, [props['index']])
