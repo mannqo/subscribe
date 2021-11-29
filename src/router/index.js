@@ -46,7 +46,7 @@ export default [
     },
 
     {
-        path: "/entryNo",
+        path: "/entryNo/:type/:id/:orderNumber/:principalId",
         component: EntryNo,
     },
     {

@@ -6,13 +6,14 @@ import { getOrderEntry, getWxKey } from '../../../../services/entryNo'
 import wx from 'weixin-js-sdk'
 import { useHistory } from 'react-router-dom';
 const InputForm = ({ id, type, orderNumber, principalId }) => {
+    console.log(id, type, orderNumber, principalId);
     // 变量定义
     const [orderLoading, setOrderLoading] = useState(false)
     const [form] = useForm();
     const history = useHistory()
 
     useEffect(() => {
-        if (type === 1) {
+        if (parseInt(type) === 1) {
             form.setFieldsValue({
                 orderNumber,
                 principalId
@@ -59,7 +60,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
             if (code === 0) {
                 message.success(msg)
                 form.resetFields()
-                history.push('/infor')
+                history.push('/main/infor')
             } else {
                 message.error(msg)
             }
@@ -70,7 +71,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
             setOrderLoading(false)
         }
     }
-    
+
     return (
         <>
             <Form

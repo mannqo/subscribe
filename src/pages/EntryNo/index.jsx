@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InputForm from './components/InputForm';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation ,withRouter} from 'react-router-dom';
 import { Result, Button } from 'antd'
-const EntryNo = () => {
-    const location = useLocation()
+const EntryNo = (props) => {
     const history = useHistory()
-    const { id, type, orderNumber, principalId } = location.state || { id: 5, type: 0, principalId: 222, orderNumber: 378926 }
+    console.log(props.match);
+    const { id, type, orderNumber, principalId } = props.match.params || { id: 5, type: 0, principalId: 222, orderNumber: 378926 }
     const [result, setResult] = useState(false)
-
     useEffect(() => {
         type === 2 && setResult(true)
     }, [type])
@@ -22,11 +21,11 @@ const EntryNo = () => {
                         title="该单号已经处理完成"
                         subTitle="感谢你的使用，有什么不方便的地方欢迎反馈"
                         extra={[
-                            <Button onClick={() => history.push('/infor')} size='large' type="primary">Back Home</Button>
+                            <Button onClick={() => history.push('/main/infor')} size='large' type="primary">Back Home</Button>
                         ]}
                     />
                     : <>
-                        <BackButton onClick={() => history.push('/infor')}>返回</BackButton>
+                        <BackButton onClick={() => history.push('/main/infor')}>返回</BackButton>
                         <Title>单号录入</Title>
                         <InputForm id={id} type={type} orderNumber={orderNumber} principalId={principalId} />
                     </>
