@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, message, InputNumber } from 'antd';
+import { Form, Button, message, InputNumber, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { getCover } from '../../../../services/report'
 import { useHistory } from 'react-router-dom';
@@ -12,21 +12,28 @@ const Cover = () => {
     const history = useHistory()
 
     const handleFinish = async (values) => {
-        setOrderLoading(true)
-        try {
-            // 发送请求
-            const data = await getCover(values)
-            if (data.code === 0) {
-                message.success(data.message)
-                history.push('/report/result')
-            } else {
-                message.error(data.message)
+        Modal.confirm({
+            title: '请确认你的学工号是否正确？',
+            content: <p>学工号：{values.userId}</p>,
+            maskClosable: true,
+            onOk: async () => {
+                setOrderLoading(true)
+                try {
+                    // 发送请求
+                    const data = await getCover(values)
+                    if (data.code === 0) {
+                        message.success(data.message)
+                        history.push('/report/result')
+                    } else {
+                        message.error(data.message)
+                    }
+                } catch (error) {
+                    message.error(error)
+                } finally {
+                    setOrderLoading(false)
+                }
             }
-        } catch (error) {
-            message.error(error)
-        } finally {
-            setOrderLoading(false)
-        }
+        })
     }
 
     return (

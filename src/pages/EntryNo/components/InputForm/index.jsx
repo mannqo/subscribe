@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, InputNumber } from 'antd';
+import { Form, Input, Button, message, InputNumber, Modal } from 'antd';
 import { InstagramOutlined } from '@ant-design/icons'
 import { useForm } from 'antd/lib/form/Form';
 import { getOrderEntry, getWxKey } from '../../../../services/entryNo'
@@ -12,7 +12,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
     const history = useHistory()
 
     useEffect(() => {
-        if (type === 1) {
+        if (parseInt(type) === 1) {
             form.setFieldsValue({
                 orderNumber,
                 principalId
@@ -51,26 +51,37 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
     const handleFinish = async (params) => {
         // userId，前面传过来，预约号不用传
         const requestParams = { ...params, userId: 1, orderNumber: parseInt(params.orderNumber) }
-        setOrderLoading(true)
-        try {
-            const data = await getOrderEntry(requestParams)
-            const { code, message: msg } = data
-            console.log(msg);
-            if (code === 0) {
-                message.success(msg)
-                form.resetFields()
-                history.push('/main/infor')
-            } else {
-                message.error(msg)
-            }
-        } catch (error) {
-            console.log(error.message);
-            message.error('录入失败，请重试！')
-        } finally {
-            setOrderLoading(false)
-        }
+        Modal.confirm({
+            title: '请确认你的单号无误！',
+            content: <div>
+                <p>处理单号：{requestParams.orderNumber}</p>
+                <p>学工号：{requestParams.principalId}</p>
+            </div>,
+            onOk: async () => {
+                setOrderLoading(true)
+                try {
+                    const data = await getOrderEntry(requestParams)
+                    const { code, message: msg } = data
+                    console.log(msg);
+                    if (code === 0) {
+                        message.success(msg)
+                        form.resetFields()
+                        history.push('/main/infor')
+                    } else {
+                        message.error(msg)
+                    }
+                } catch (error) {
+                    console.log(error.message);
+                    message.error('录入失败，请重试！')
+                } finally {
+                    setOrderLoading(false)
+                }
+            },
+            maskClosable: true
+        })
+
     }
-    
+
     return (
         <>
             <Form
@@ -125,14 +136,10 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
                         {
                             required: true,
                             message: '学工号不能为空噢！'
-                        },
-                        {
-                            type: 'number',
-                            message: '只能填写数字噢！'
                         }
                     ]}
                 >
-                    <InputNumber style={{ width: "100%" }} maxLength="20" placeholder="请输入你的负责人学工号" />
+                    <Input style={{ width: "100%" }} maxLength="20" placeholder="请输入你的负责人学工号" />
                 </Form.Item>
                 <Form.Item
                     wrapperCol={{

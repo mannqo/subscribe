@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, message, InputNumber } from 'antd';
+import { Form, Button, message, InputNumber, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { getLineUp } from '../../../../services/report'
 import { BackButton, CoverContainer, Title } from '../../style';
@@ -12,21 +12,29 @@ const LineUp = () => {
     const [form] = useForm()
 
     const handleFinish = async (values) => {
-        setLineLoading(true)
-        try {
-            // 发送请求
-            const data = await getLineUp(values)
-            if (data.code === 0) {
-                message.success(data.message)
-                history.push('/report/result')
-            } else {
-                message.error(data.message)
+        Modal.confirm({
+            title: '请确认你的学工号是否正确？',
+            content: <p>学工号：{values.userId}</p>,
+            maskClosable: true,
+            onOk: async () => {
+                setLineLoading(true)
+                try {
+                    // 发送请求
+                    const data = await getLineUp(values)
+                    if (data.code === 0) {
+                        message.success(data.message)
+                        history.push('/report/result')
+                    } else {
+                        message.error(data.message)
+                    }
+                } catch (error) {
+                    message.error(error)
+                } finally {
+                    setLineLoading(false)
+                }
             }
-        } catch (error) {
-            message.error(error)
-        } finally {
-            setLineLoading(false)
-        }
+        })
+
     }
 
     return (
