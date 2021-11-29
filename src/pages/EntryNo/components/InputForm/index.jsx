@@ -59,7 +59,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
             if (code === 0) {
                 message.success(msg)
                 form.resetFields()
-                history.push('/infor')
+                history.push('/main/infor')
             } else {
                 message.error(msg)
             }

@@ -6,6 +6,9 @@ import { Result, Button } from 'antd'
 const EntryNo = () => {
     const location = useLocation()
     const history = useHistory()
+
+    console.log('location')
+    console.log(location)
     const { id, type, orderNumber, principalId } = location.state || { id: 5, type: 0, principalId: 222, orderNumber: 378926 }
     const [result, setResult] = useState(false)
 
@@ -22,11 +25,11 @@ const EntryNo = () => {
                         title="该单号已经处理完成"
                         subTitle="感谢你的使用，有什么不方便的地方欢迎反馈"
                         extra={[
-                            <Button onClick={() => history.push('/infor')} size='large' type="primary">Back Home</Button>
+                            <Button onClick={() => history.push('/main/infor')} size='large' type="primary">Back Home</Button>
                         ]}
                     />
                     : <>
-                        <BackButton onClick={() => history.push('/infor')}>返回</BackButton>
+                        <BackButton onClick={() => history.push('/main/infor')}>返回</BackButton>
                         <Title>单号录入</Title>
                         <InputForm id={id} type={type} orderNumber={orderNumber} principalId={principalId} />
                     </>
