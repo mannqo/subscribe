@@ -4,10 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { getSubscribeDay } from '../../services/date';
 import { message } from 'antd';
 
-const dateLink = ['/main/subscribe/1', '/main/subscribe/2',
-    '/main/subscribe/3', '/main/subscribe/4', '/main/subscribe/5',
-    '/main/subscribe/6', '/main/subscribe/7'];
-
 export default memo(function Date(props) {
     const { changeDay } = props;
     const initialData = [
@@ -45,7 +41,7 @@ export default memo(function Date(props) {
     const [data, setData] = useState(initialData);
 
     const whichDay = window.location.href[window.location.href.length - 1];
-    
+
     // eslint-disable-next-line
     useEffect(async () => {
         try {
@@ -67,7 +63,7 @@ export default memo(function Date(props) {
             <div className="date-list">
                 {data.map((item, index) => {
                     return (
-                        <NavLink to={dateLink[index]} key={item.day}>
+                        <NavLink to={'/main/subscribe/' + index} key={item.day}>
                             <div className="date-item">
                                 <div>{item.day}</div>
                                 <div>{item.week}</div>
