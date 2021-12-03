@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { getSubscribeDay } from '../../services/date';
 import { message } from 'antd';
 
-const dateLink = ['/subscribe/1', '/subscribe/2',
-    '/subscribe/3', '/subscribe/4', '/subscribe/5',
-    '/subscribe/6', '/subscribe/7'];
+const dateLink = ['/main/subscribe/1', '/main/subscribe/2',
+    '/main/subscribe/3', '/main/subscribe/4', '/main/subscribe/5',
+    '/main/subscribe/6', '/main/subscribe/7'];
 
 export default memo(function Date(props) {
     const { changeDay } = props;
