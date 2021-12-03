@@ -5,11 +5,11 @@ import {
 import './ticket.css'
 let tab = ['未录入', '未完成', '已完成']
 export default withRouter(function Ticket(props) {
-    console.log('tt', props);
+    // console.log('tt', props);
     let { id, reservationNumber, orderNumber, principalId, day, time } = props.data
     day = day.slice(5)
     let timeArr = time.split('--').map(v => { return v.slice(0, -3) })
-    console.log(timeArr);
+    // console.log(timeArr);
 
     return (
         <div className="h_tickets"
