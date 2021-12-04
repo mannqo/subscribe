@@ -10,11 +10,11 @@ export default memo(function Tickets(props) {
 
     // eslint-disable-next-line
     useEffect(async () => {
-        console.log('请求', props.index);
+        // console.log('请求', props.index);
         switchIsLoading(true);
         updataList([]);
         let data = await getTickets(props.index, '1');
-        console.log(data);
+        // console.log(data);
         switchIsLoading(false);
         updataList(data.data);
 

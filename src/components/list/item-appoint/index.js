@@ -35,8 +35,7 @@ export default memo(function ItemAppoint(props) {
                     )
                 });
             }
-        } catch (err) {
-            console.log(err);
+        } catch (err) { 
             message.error('发生错误了', err);
         }
 

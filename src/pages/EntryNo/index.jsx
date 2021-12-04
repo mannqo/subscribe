@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InputForm from './components/InputForm';
-import { useHistory, useLocation, withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Result, Button } from 'antd'
 const EntryNo = (props) => {
     const history = useHistory()

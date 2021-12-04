@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, InputNumber, Modal } from 'antd';
+import { Form, Input, Button, message, Modal } from 'antd';
 import { InstagramOutlined } from '@ant-design/icons'
 import { useForm } from 'antd/lib/form/Form';
 import { getOrderEntry, getWxKey } from '../../../../services/entryNo'
