@@ -8,7 +8,6 @@ import { NavLink } from 'react-router-dom';
 export default memo(function Header() {
     const [current, setCurrent] = useState('subscribe');
     useEffect(() => {
-        console.log(window.location.hash);
         let hash = window.location.hash
         if (hash.search('subscribe') !== -1 && current !== 'subscribe') {
             setCurrent('subscribe')

@@ -21,7 +21,7 @@ export default function request(option) {
         instance.interceptors.response.use(response => {
             return response.data;
         }, err => {
-            console.log('response err', err);
+            // console.log('response err', err);
             if (err && err.response) {
                 switch (err.response.status) {
                     case 400:
@@ -36,7 +36,7 @@ export default function request(option) {
             }
             return err;
         })
- 
+
         // 传入对象进行网络请求
         instance(option).then(res => {
             resolve(res);

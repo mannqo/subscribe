@@ -10,6 +10,12 @@ export default memo(function List(props) {
     const { date, day, loading } = timeState;
     let { allDateData } = timeState;
     allDateData = allDateData === null ? [] : allDateData;
+    let index = 0;
+    // eslint-disable-next-line  
+    allDateData.map(item => {
+        if (item.am) index++;
+    }) 
+
     const columns = [
         {
             dataIndex: 'time',
@@ -18,7 +24,7 @@ export default memo(function List(props) {
             dataIndex: 'status',
             render: (status, item) => {
                 return (
-                    <ItemAppoint status={status} item={item} date={date} day={day} />
+                    <ItemAppoint status={status} item={item} date={date} day={day} allDateData={allDateData} />
                 )
             }
         },
@@ -34,15 +40,16 @@ export default memo(function List(props) {
         }
     ];
 
+
     return (
         <>
             <TableWrapper>
                 <h3 className='listTitle'>上午</h3>
-                <Table className="table-list" loading={loading} columns={columns} dataSource={allDateData.slice(0, 6)} />
+                <Table className="table-list" loading={loading} columns={columns} dataSource={allDateData.slice(0, index)} />
             </TableWrapper>
             <TableWrapper>
                 <h3 className='listTitle'>下午</h3>
-                <Table className="table-list" loading={loading} columns={columns} dataSource={allDateData.slice(7, 12)} />
+                <Table className="table-list" loading={loading} columns={columns} dataSource={allDateData.slice(index, allDateData.length)} />
             </TableWrapper>
         </>
     )

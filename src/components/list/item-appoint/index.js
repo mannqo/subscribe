@@ -4,23 +4,27 @@ import { getAppointment } from '../../../services/subscribe';
 
 
 export default memo(function ItemAppoint(props) {
-    const { status, item, date } = props;
+    const { status, item, date, allDateData } = props;
     const [appointmentNum, setAppointmentNum] = useState(0);
-
+    let amMaxNum = 0;  // 早上最多可以预约个数
+    let pmMaxNum = 0;  // 晚上最多可以预约个数
+    let index = 0;   // 是否为am
     // 获取预约个数
     const getAppointmentNum = (num) => {
         setAppointmentNum(num);
     }
-    const getAppointmentRes = async (timeId) => {
+    const appointReq = async (timeId) => {
         try {
             const appoint = await getAppointment('1', timeId, date, appointmentNum);
-            if (appoint.data && appoint.data.length && appoint.message === '全部预约成功') {
+            if (!appoint.code) {
+                const p1 = appoint.message.split(',')[0];
+                const p2 = appoint.message.split(',')[1];
                 Modal.info({
                     title: '预约成功',
                     content: (
                         <>
-                            <p>您预约成功了{appoint.data.length}个号</p>
-                            <p>请在24小时内完善相应的报销单号信息</p>
+                            <p>{p1}</p>
+                            <p>{p2}</p>
                         </>
                     ),
                     onOk() { window.location.reload(); },
@@ -28,12 +32,43 @@ export default memo(function ItemAppoint(props) {
             } else {
                 Modal.warning({
                     title: '预约失败',
+                    content: (
+                        <p>{appoint.message}</p>
+                    )
                 });
             }
         } catch (err) {
             message.error('发生错误了', err);
         }
-
+    }
+    const getAppointmentRes = async (timeId) => {
+        // eslint-disable-next-line 
+        allDateData.map(item => {
+            if (item.id >= timeId) {
+                if (item.am) {
+                    amMaxNum += item.number - item.count;
+                    index = Math.max(item.id)
+                } else {
+                    pmMaxNum += item.number - item.count;
+                }
+            }
+        })
+        if ((timeId <= index && appointmentNum <= amMaxNum) || (timeId > index && appointmentNum <= pmMaxNum)) {
+            appointReq(timeId);
+        } else {
+            Modal.confirm({
+                title: '预约失败',
+                content: (
+                    < >
+                        <p>这个时间段你最多只能预约{timeId <= index ? amMaxNum : pmMaxNum}个号</p>
+                        <p>确定要预约吗?</p>
+                    </>
+                ),
+                onOk() {
+                    appointReq(timeId);
+                }
+            });
+        }
 
     }
 

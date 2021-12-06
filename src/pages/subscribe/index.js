@@ -8,7 +8,6 @@ import { message } from 'antd';
 
 export default memo(function Subscribe() {
     const [timeState, setTimeState] = useState({ allDateData: initialAllDateData, date: '2021.1.1', day: 1, loading: false });
-
     const changeDay = async (day) => {
         try {
             setTimeState(state => ({ ...state, loading: true }));
