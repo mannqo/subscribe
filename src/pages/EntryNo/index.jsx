@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InputForm from './components/InputForm';
-import { useHistory, useLocation, withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Result, Button } from 'antd'
+
 const EntryNo = (props) => {
     const history = useHistory()
     const location = useLocation()
-
-    const { id, type, orderNumber, principalId } = location.state || { id: 5, type: 0, principalId: 222, orderNumber: 378926 }
+    const { id, type, orderNumber, principalId,reservationNumber } = location.state || { id: 5, type: 0, principalId: 222, orderNumber: 378926,reservationNumber:22 }
     // console.log(props.match);
     // const { id, type, orderNumber, principalId } = props.match.params || { id: 5, type: 0, principalId: 222, orderNumber: 378926 }
     const [result, setResult] = useState(false)
@@ -17,7 +17,7 @@ const EntryNo = (props) => {
 
     return (
         <EntryNoContainer>
-            {
+            { 
                 result
                     ? <Result
                         status="success"
@@ -30,7 +30,8 @@ const EntryNo = (props) => {
                     : <>
                         <BackButton onClick={() => history.push('/main/infor')}>返回</BackButton>
                         <Title>单号录入</Title>
-                        <InputForm id={id} type={type} orderNumber={orderNumber} principalId={principalId} />
+                        {/* reservationNumber 预约号 id id order 处理单号，principalId学号 */}
+                        <InputForm id={id} type={type} orderNumber={orderNumber} principalId={principalId} reservationNumber={reservationNumber} />
                     </>
             }
         </EntryNoContainer>
@@ -40,7 +41,6 @@ const EntryNo = (props) => {
 const EntryNoContainer = styled.div`
     display: flex;
     flex-direction: column;   
-    /* justify-content: center; */
     align-items: center;
     width: 100%;
     height: 100vh;

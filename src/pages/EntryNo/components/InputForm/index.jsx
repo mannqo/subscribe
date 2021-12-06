@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, InputNumber, Modal } from 'antd';
+import { Form, Input, Button, message, Modal } from 'antd';
 import { InstagramOutlined } from '@ant-design/icons'
 import { useForm } from 'antd/lib/form/Form';
 import { getOrderEntry, getWxKey } from '../../../../services/entryNo'
 import wx from 'weixin-js-sdk'
 import { useHistory } from 'react-router-dom';
-const InputForm = ({ id, type, orderNumber, principalId }) => {
+const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => {
     // 变量定义
     const [orderLoading, setOrderLoading] = useState(false)
     const [form] = useForm();
@@ -15,17 +15,19 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
         if (parseInt(type) === 1) {
             form.setFieldsValue({
                 orderNumber,
-                principalId
+                principalId,
+                id,
+                reservationNumber   
             })
         }
-    })
+    }, [form, id, orderNumber, principalId, reservationNumber, type])
 
     // 操作函数
     const openCamera = async () => {
         const data = await getWxKey({ url: window.location.href.split('#')[0] })
         const { appId, timestamp, nonceStr, jsKey: signature } = data.data
         wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId, // 必填，公众号的唯一标识
             timestamp, // 必填，生成签名的时间戳
             nonceStr, // 必填，生成签名的随机串
@@ -53,6 +55,7 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
         const requestParams = { ...params, userId: 1, orderNumber: parseInt(params.orderNumber) }
         Modal.confirm({
             title: '请确认你的单号无误！',
+            maskClosable: true,
             content: <div>
                 <p>处理单号：{requestParams.orderNumber}</p>
                 <p>学工号：{requestParams.principalId}</p>
@@ -62,7 +65,6 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
                 try {
                     const data = await getOrderEntry(requestParams)
                     const { code, message: msg } = data
-                    console.log(msg);
                     if (code === 0) {
                         message.success(msg)
                         form.resetFields()
@@ -76,16 +78,15 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
                 } finally {
                     setOrderLoading(false)
                 }
-            },
-            maskClosable: true
+            }
         })
-
     }
 
     return (
         <>
             <Form
                 initialValues={{
+                    reservationNumber,
                     id
                 }}
                 onFinish={(values) => handleFinish(values)}
@@ -98,14 +99,15 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
                     span: 20,
                 }}
             >
+                
                 <Form.Item
-                    name="id"
-                    label="预约号（id）"
+                    name="reservationNumber"
+                    label="排队号"
                 >
                     <Input
                         disabled={true}
                         placeholder="请输入你的预约单号"
-                        value={id}
+                        value={reservationNumber}
                     />
                 </Form.Item>
                 <Form.Item
@@ -140,6 +142,17 @@ const InputForm = ({ id, type, orderNumber, principalId }) => {
                     ]}
                 >
                     <Input style={{ width: "100%" }} maxLength="20" placeholder="请输入你的负责人学工号" />
+                </Form.Item>
+                <Form.Item
+                    name="id"
+                    label="id"
+                    hidden
+                >
+                    <Input
+                        disabled={true}
+                        placeholder="请输入你的id"
+                        value={id}
+                    />
                 </Form.Item>
                 <Form.Item
                     wrapperCol={{
