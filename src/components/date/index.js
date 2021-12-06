@@ -2,43 +2,13 @@ import React, { memo, useEffect, useState } from 'react';
 import { DateWrapper } from './style';
 import { NavLink } from 'react-router-dom';
 import { getSubscribeDay } from '../../services/date';
+import { initialDayData } from '../../mock/local-data';
 import { message } from 'antd';
 
 export default memo(function Date(props) {
-    const { changeDay } = props;
-    const initialData = [
-        {
-            day: '11.21',
-            week: '星期日',
-        },
-        {
-            day: '11.22',
-            week: '星期一',
-        },
-        {
-            day: '11.23',
-            week: '星期二',
-        },
-        {
-            day: '11.24',
-            week: '星期三',
-        },
-        {
-            day: '11.25',
-            week: '星期四',
-        },
-        {
-            day: '11.26',
-            week: '星期五',
-        },
-        {
-            day: '11.27',
-            week: '星期六',
-        },
-    ];
-
+    const { changeDay } = props; 
     const [sevenDay, setSevenDay] = useState(' ');
-    const [data, setData] = useState(initialData);
+    const [data, setData] = useState(initialDayData);
 
     const whichDay = window.location.href[window.location.href.length - 1];
 
