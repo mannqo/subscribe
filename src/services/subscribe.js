@@ -9,8 +9,6 @@ export function getAppointment(userId, timeId, day, appointmentCount) {
             timeId,
             day,
             appointmentCount
-        }
-
-
+        } 
     })
 }

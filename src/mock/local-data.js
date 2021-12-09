@@ -73,4 +73,35 @@ export const initialAllDateData = [
         status: 1,
         remain: '余号10',
     }
-]
+];
+
+export const initialData = [
+    {
+        day: '11.21',
+        week: '星期日',
+    },
+    {
+        day: '11.22',
+        week: '星期一',
+    },
+    {
+        day: '11.23',
+        week: '星期二',
+    },
+    {
+        day: '11.24',
+        week: '星期三',
+    },
+    {
+        day: '11.25',
+        week: '星期四',
+    },
+    {
+        day: '11.26',
+        week: '星期五',
+    },
+    {
+        day: '11.27',
+        week: '星期六',
+    },
+];

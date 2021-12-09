@@ -4,7 +4,7 @@ export default function request(option) {
     return new Promise((resolve, reject) => {
         // 1. 创建axios的实例
         const instance = axios.create({
-            baseURL: "http://114.132.235.87",
+            baseURL: "https://www.rdcmy.com/reservation/api/",
             timeout: 10000,
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -36,7 +36,7 @@ export default function request(option) {
             }
             return err;
         })
- 
+
         // 传入对象进行网络请求
         instance(option).then(res => {
             resolve(res);
