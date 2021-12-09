@@ -1,4 +1,5 @@
 import { Redirect } from 'react-router';
+import Login from '../pages/Login';
 import Main from '../pages/main';
 import Subscribe from '../pages/subscribe';
 import Infor from '../pages/infor';
@@ -14,8 +15,12 @@ export default [
         path: "/",
         exact: true,
         render: () => (
-            <Redirect to="/main" />
+            <Redirect to="/login" />
         )
+    },
+    {
+        path: "/login",
+        component: Login,
     },
     {
         path: '/main',

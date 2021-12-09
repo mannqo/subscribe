@@ -4,12 +4,12 @@ import { NavLink } from 'react-router-dom';
 import { getSubscribeDay } from '../../services/date';
 import { initialDayData } from '../../mock/local-data';
 import { message } from 'antd';
+import { initialData } from '../../mock/local-data';
 
 export default memo(function Date(props) {
-    const { changeDay } = props; 
+    const { changeDay } = props;
     const [sevenDay, setSevenDay] = useState(' ');
-    const [data, setData] = useState(initialDayData);
-
+    const [data, setData] = useState(initialData); 
     const whichDay = window.location.href[window.location.href.length - 1];
 
     // eslint-disable-next-line
