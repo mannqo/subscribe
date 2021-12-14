@@ -1,7 +1,7 @@
-import React, { memo, useEffect } from 'react';
-import styled from 'styled-components';
-import { message, Spin } from 'antd';
-import { getIdentity } from '../../services/login';
+import React, { memo, useEffect } from 'react'
+import styled from 'styled-components'
+import { message, Spin } from 'antd'
+import { getIdentity } from '../../services/login'
 
 export default memo(function Login() {
     useEffect(async () => {
@@ -20,9 +20,8 @@ export default memo(function Login() {
             // 返回正确的code之后跳转到/main页面就好
 
         } catch (err) {
-            message.error('出错了');
+            message.error('出错了')
         }
-
     }, [])
     return (
         <SpinWrapper>
