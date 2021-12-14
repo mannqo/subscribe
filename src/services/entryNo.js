@@ -21,7 +21,7 @@ export function getOrderEntry(options) {
 export const getWxKey = (options) => {
     return request({
         method: 'get',
-        url: 'https://www.rdcmy.com/reservationSystem/api/wx/getWxJsKey',
+        url: '/wx/getWxJsKey',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
