@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, message } from 'antd';
 import { TableWrapper } from './style';
 import ItemAppoint from './item-appoint';
 
@@ -9,12 +9,17 @@ export default memo(function List(props) {
     const { timeState } = props;
     const { date, day, loading } = timeState;
     let { allDateData } = timeState;
-    allDateData = allDateData === null ? [] : allDateData;
     let index = 0;
-    // eslint-disable-next-line  
-    allDateData.map(item => {
-        if (item.am) index++;
-    }) 
+    try {
+        allDateData = allDateData === null ? [] : allDateData;
+        // eslint-disable-next-line  
+        allDateData.map(item => {
+            if (item.am) index++;
+        })
+    } catch (err) {
+        message.error('出错了');
+    }
+
 
     const columns = [
         {

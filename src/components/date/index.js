@@ -32,7 +32,7 @@ export default memo(function Date(props) {
             <div className="date-list">
                 {data.map((item, index) => {
                     return (
-                        <NavLink to={'/main/subscribe/' + index} key={item.day}>
+                        <NavLink to={'/main/subscribe/' + parseInt(index + 1)} key={item.day}>
                             <div className="date-item">
                                 <div>{item.day}</div>
                                 <div>{item.week}</div>
