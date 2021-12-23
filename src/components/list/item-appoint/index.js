@@ -11,12 +11,11 @@ export default memo(function ItemAppoint(props) {
     let index = 0;   // 是否为am
     // 获取预约个数
     const getAppointmentNum = (num) => {
-        setAppointmentNum(num);
+        setAppointmentNum(num);        
     }
     const appointReq = async (timeId) => {
         try {
-            const userId = storageUtils.getUser().id || 0;
-            console.log(userId);
+            const userId = storageUtils.getUser().id;
             const appoint = await getAppointment(userId, timeId, date, appointmentNum);
             if (!appoint.code) {
                 const p1 = appoint.message.split(',')[0];

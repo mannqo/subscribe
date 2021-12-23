@@ -4,15 +4,15 @@ import { Result } from 'antd'
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs'
-import qs from 'qs'
+// import qs from 'qs'
 // 获取路径中某个name的值
 
 const Report = () => {
     const history = useHistory()
     const location = useLocation()
     const [isDue, setIsDue] = useState(false)
-    const AppId = 'wx615638e0b19f5067' // 公众号 appId
-    const local = window.location.href  // 当前页面路径
+    // const AppId = 'wx615638e0b19f5067' // 公众号 appId
+    // const local = window.location.href  // 当前页面路径
     const code = location.search.split("code=")[1]
     
 

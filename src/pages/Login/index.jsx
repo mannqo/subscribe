@@ -4,10 +4,11 @@ import { message, Spin } from 'antd'
 import { getIdentity } from '../../services/login'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
+import { AppId } from '../../mock/constant'
 
 export default memo(function Login() {
+    // eslint-disable-next-line
     useEffect(async () => {
-        const AppId = 'wx615638e0b19f5067';
         const local = window.location.href;
         window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_base#wechat_redirect";
         try {
@@ -17,7 +18,7 @@ export default memo(function Login() {
                 // 存user的值
                 memoryUtils.user = identity.user;
                 storageUtils.saveUser(identity.user);
-                window.location.href = "/reservation/appointment/#/main";
+                window.location.href = "../main";
             } else {
                 message.error(identity.message);
             }
@@ -26,6 +27,7 @@ export default memo(function Login() {
             message.error('出错了');
         }
     }, [])
+
     return (
         <SpinWrapper>
             <Spin size='large' tip='登录认证中' />
