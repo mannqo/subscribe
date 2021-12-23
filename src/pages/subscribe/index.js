@@ -13,7 +13,6 @@ export default memo(function Subscribe() {
             setTimeState(state => ({ ...state, loading: true }));
             const getTime = await getSubscribeTime(day);
             const { orderTimes, date } = getTime.data;
-
             // eslint-disable-next-line 
             orderTimes.map(item => {
                 item.time = item.start.slice(0, 5) + '-' + item.end.slice(0, 5);
@@ -25,7 +24,7 @@ export default memo(function Subscribe() {
             setTimeState({ allDateData: orderTimes, date, day, loading: false });
 
         } catch (err) {
-            setTimeState({ loading: false });
+            setTimeState({ allDateData: initialAllDateData, date: '2021.1.1', day: 1, loading: false });
             message.error('发生错误了', err);
         }
     }

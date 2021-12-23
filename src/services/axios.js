@@ -1,13 +1,17 @@
 import axios from 'axios';
+import storageUtils from '../utils/storageUtils';
+
 
 export default function request(option) {
     return new Promise((resolve, reject) => {
         // 1. 创建axios的实例
+        const token = storageUtils.getUser().token || '';
         const instance = axios.create({
             baseURL: "https://cwcwx.gdut.edu.cn/reservation/api/",
             timeout: 10000,
             headers: {
                 "Access-Control-Allow-Origin": "*",
+                "token": token
             }
         });
         instance.defaults.headers.post['Content-Type'] = 'application/json'

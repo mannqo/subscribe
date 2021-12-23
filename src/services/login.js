@@ -2,6 +2,8 @@ import request from "./axios";
 
 export function getIdentity(code) {
     return request({
-        url: "/user/login?" + code,
+        method: 'POST',
+        url: "/user/login",
+        data: code,
     })
 }

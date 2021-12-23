@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import { Form, InputNumber, Button, Modal, message } from 'antd';
 import { getAppointment } from '../../../services/subscribe';
-
+import storageUtils from '../../../utils/storageUtils';
 
 export default memo(function ItemAppoint(props) {
     const { status, item, date, allDateData } = props;
@@ -11,11 +11,12 @@ export default memo(function ItemAppoint(props) {
     let index = 0;   // 是否为am
     // 获取预约个数
     const getAppointmentNum = (num) => {
-        setAppointmentNum(num);
+        setAppointmentNum(num);        
     }
     const appointReq = async (timeId) => {
         try {
-            const appoint = await getAppointment('1', timeId, date, appointmentNum);
+            const userId = storageUtils.getUser().id;
+            const appoint = await getAppointment(userId, timeId, date, appointmentNum);
             if (!appoint.code) {
                 const p1 = appoint.message.split(',')[0];
                 const p2 = appoint.message.split(',')[1];
@@ -80,7 +81,7 @@ export default memo(function ItemAppoint(props) {
                         className="appointmentNum" min={0} max={10} defaultValue={0} />
                 </Form.Item>
                 <Form.Item className="form-item">
-                    <Button onClick={() => getAppointmentRes(item.id)} danger={status} disabled={!status}>{status === 1 ? '抢' : '已抢完'}</Button>
+                    <Button onClick={() => getAppointmentRes(item.id)} danger={status} disabled={!status}>{status === 1 ? '预约' : '已完'}</Button>
                 </Form.Item>
             </Form>
         </>
