@@ -6,16 +6,16 @@ import { getIdentity, getIdentityGet } from '../../services/login'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
 import { AppId } from '../../mock/constant'
+import QueryString from 'qs'
 
 export default memo(function Login() {
     const history = useHistory()
-
     // eslint-disable-next-line
     useEffect(() => {
-
         const getTry = async () => {
             try {
-                const code = window.location.href.split('?')[1].split('&')[0].split('=')[1]
+                // const code = window.location.href.split('?')[1].split('&')[0].split('=')[1]
+                const code = QueryString.parse(window.location.href.split('?')[1])['code'] ?? null
                 if (code === null || code === '') {
                     const local = window.location.href
                     window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + AppId + "&redirect_uri=" + encodeURIComponent(local) + "&response_type=code&scope=snsapi_base#wechat_redirect"

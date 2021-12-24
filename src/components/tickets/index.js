@@ -13,7 +13,8 @@ export default memo(function Tickets(props) {
         // console.log('请求', props.index);
         switchIsLoading(true);
         updataList([]);
-        let data = await getTickets(props.index, '1');
+        const userId = JSON.parse(localStorage.getItem('identity')).id
+        let data = await getTickets(props.index, userId);
         // console.log(data);
         switchIsLoading(false);
         updataList(data.data);

@@ -52,7 +52,8 @@ const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => 
     // 成功回调
     const handleFinish = async (params) => {
         // userId，前面传过来，预约号不用传
-        const requestParams = { ...params, userId: 1, orderNumber: parseInt(params.orderNumber) }
+        const userId = JSON.parse(localStorage.getItem('identity')).id
+        const requestParams = { ...params, userId, orderNumber: parseInt(params.orderNumber) }
         Modal.confirm({
             title: '请确认你的单号无误！',
             maskClosable: true,
