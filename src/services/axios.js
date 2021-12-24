@@ -1,51 +1,57 @@
-import axios from 'axios';
-import storageUtils from '../utils/storageUtils';
+import axios from 'axios'
+import storageUtils from '../utils/storageUtils'
 
 
 export default function request(option) {
     return new Promise((resolve, reject) => {
         // 1. 创建axios的实例
-        const token = storageUtils.getUser().token || '';
+        // const token = storageUtils.getUser().token || '';
+        const token = (localStorage.getItem('identity') && JSON.parse(localStorage.getItem('identity'))?.token) ?? ''
         const instance = axios.create({
             baseURL: "https://cwcwx.gdut.edu.cn/reservation/api/",
             timeout: 10000,
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "token": token
             }
-        });
+        })
         instance.defaults.headers.post['Content-Type'] = 'application/json'
 
         // 拦截器
         instance.interceptors.request.use(config => {
-            return config;
+            if (localStorage.getItem('identity')) {
+                const token = JSON.parse(localStorage.getItem('identity')).token
+                config.headers['token'] = `${token}`
+            } else {
+                delete config.headers['token']
+            }
+            return config
         }, err => {
-            return err;
+            return err
         })
         instance.interceptors.response.use(response => {
-            return response.data;
+            return response.data
         }, err => {
             // console.log('response err', err);
             if (err && err.response) {
                 switch (err.response.status) {
                     case 400:
-                        err.message = '请求错误';
+                        err.message = '请求错误'
                         break
                     case 401:
-                        err.message = '未授权的访问';
+                        err.message = '未授权的访问'
                         break
                     default:
-                        err.message = "其他错误信息";
+                        err.message = "其他错误信息"
                 }
             }
-            return err;
+            return err
         })
 
         // 传入对象进行网络请求
         instance(option).then(res => {
-            resolve(res);
+            resolve(res)
         }).catch(err => {
-            reject(err);
+            reject(err)
         })
     })
 }

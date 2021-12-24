@@ -15,7 +15,8 @@ export default memo(function ItemAppoint(props) {
     }
     const appointReq = async (timeId) => {
         try {
-            const userId = storageUtils.getUser().id;
+            // const userId = storageUtils.getUser().id;
+            const userId = JSON.parse(localStorage.getItem('identity')).id
             const appoint = await getAppointment(userId, timeId, date, appointmentNum);
             if (!appoint.code) {
                 const p1 = appoint.message.split(',')[0];

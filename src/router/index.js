@@ -15,7 +15,7 @@ export default [
         path: "/",
         exact: true,
         render: () => (
-            <Redirect to="/main" />
+            <Redirect to="/login" />
         )
     },
     {
