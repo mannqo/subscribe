@@ -6,7 +6,7 @@ export default function request(option) {
     return new Promise((resolve, reject) => {
         // 1. 创建axios的实例
         // const token = storageUtils.getUser().token || '';
-        const token = (localStorage.getItem('identity') && JSON.parse(localStorage.getItem('identity'))?.token) ?? ''
+        const token = (sessionStorage.getItem('identity') && JSON.parse(sessionStorage.getItem('identity'))?.token) ?? ''
         const instance = axios.create({
             baseURL: "https://cwcwx.gdut.edu.cn/reservation/api/",
             timeout: 10000,
@@ -18,8 +18,8 @@ export default function request(option) {
 
         // 拦截器
         instance.interceptors.request.use(config => {
-            if (localStorage.getItem('identity')) {
-                const token = JSON.parse(localStorage.getItem('identity')).token
+            if (sessionStorage.getItem('identity')) {
+                const token = JSON.parse(sessionStorage.getItem('identity')).token
                 config.headers['token'] = `${token}`
             } else {
                 delete config.headers['token']

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, Modal } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { Form, Input, Button, message, Modal } from 'antd'
 import { InstagramOutlined } from '@ant-design/icons'
-import { useForm } from 'antd/lib/form/Form';
+import { useForm } from 'antd/lib/form/Form'
 import { getOrderEntry, getWxKey } from '../../../../services/entryNo'
 import wx from 'weixin-js-sdk'
-import { useHistory } from 'react-router-dom';
-const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => {
+import { useHistory } from 'react-router-dom'
+const InputForm = ({ id, type, orderNumber, principalId, reservationNumber }) => {
     // 变量定义
     const [orderLoading, setOrderLoading] = useState(false)
-    const [form] = useForm();
+    const [form] = useForm()
     const history = useHistory()
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => 
                 orderNumber,
                 principalId,
                 id,
-                reservationNumber   
+                reservationNumber
             })
         }
     }, [form, id, orderNumber, principalId, reservationNumber, type])
@@ -27,24 +27,24 @@ const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => 
         const data = await getWxKey({ url: window.location.href.split('#')[0] })
         const { appId, timestamp, nonceStr, jsKey: signature } = data.data
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId, // 必填，公众号的唯一标识
             timestamp, // 必填，生成签名的时间戳
             nonceStr, // 必填，生成签名的随机串
             signature,// 必填，签名
             jsApiList: ["scanQRCode"] // 必填，需要使用的JS接口列表
-        });
+        })
         wx.ready(() => {
             wx.scanQRCode({
                 needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
                 scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
                 success: function (res) {
-                    let result = res.resultStr.split(',')[1]; // 当needResult 为 1 时，扫码返回的结果
+                    let result = res.resultStr.split(',')[1] // 当needResult 为 1 时，扫码返回的结果
                     form.setFieldsValue({ orderNumber: result })
                 },
                 fail: function (err) {
-                    console.log('error');
-                    console.log(err);
+                    console.log('error')
+                    console.log(err)
                 }
             })
         })
@@ -52,7 +52,7 @@ const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => 
     // 成功回调
     const handleFinish = async (params) => {
         // userId，前面传过来，预约号不用传
-        const userId = JSON.parse(localStorage.getItem('identity')).id
+        const userId = JSON.parse(sessionStorage.getItem('identity')).id
         const requestParams = { ...params, userId, orderNumber: parseInt(params.orderNumber) }
         Modal.confirm({
             title: '请确认你的单号无误！',
@@ -74,7 +74,7 @@ const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => 
                         message.error(msg)
                     }
                 } catch (error) {
-                    console.log(error.message);
+                    console.log(error.message)
                     message.error('录入失败，请重试！')
                 } finally {
                     setOrderLoading(false)
@@ -100,7 +100,7 @@ const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => 
                     span: 20,
                 }}
             >
-                
+
                 <Form.Item
                     name="reservationNumber"
                     label="排队号"
@@ -172,7 +172,7 @@ const InputForm = ({ id, type, orderNumber, principalId,reservationNumber }) => 
                 </Form.Item>
             </Form>
         </>
-    );
-};
+    )
+}
 
 export default InputForm

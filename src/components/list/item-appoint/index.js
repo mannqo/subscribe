@@ -1,26 +1,26 @@
-import React, { memo, useState } from 'react';
-import { Form, InputNumber, Button, Modal, message } from 'antd';
-import { getAppointment } from '../../../services/subscribe';
-import storageUtils from '../../../utils/storageUtils';
+import React, { memo, useState } from 'react'
+import { Form, InputNumber, Button, Modal, message } from 'antd'
+import { getAppointment } from '../../../services/subscribe'
+import storageUtils from '../../../utils/storageUtils'
 
 export default memo(function ItemAppoint(props) {
-    const { status, item, date, allDateData } = props;
-    const [appointmentNum, setAppointmentNum] = useState(0);
-    let amMaxNum = 0;  // 早上最多可以预约个数
-    let pmMaxNum = 0;  // 晚上最多可以预约个数
-    let index = 0;   // 是否为am
+    const { status, item, date, allDateData } = props
+    const [appointmentNum, setAppointmentNum] = useState(0)
+    let amMaxNum = 0  // 早上最多可以预约个数
+    let pmMaxNum = 0  // 晚上最多可以预约个数
+    let index = 0   // 是否为am
     // 获取预约个数
     const getAppointmentNum = (num) => {
-        setAppointmentNum(num);        
+        setAppointmentNum(num)
     }
     const appointReq = async (timeId) => {
         try {
             // const userId = storageUtils.getUser().id;
-            const userId = JSON.parse(localStorage.getItem('identity')).id
-            const appoint = await getAppointment(userId, timeId, date, appointmentNum);
+            const userId = JSON.parse(sessionStorage.getItem('identity')).id
+            const appoint = await getAppointment(userId, timeId, date, appointmentNum)
             if (!appoint.code) {
-                const p1 = appoint.message.split(',')[0];
-                const p2 = appoint.message.split(',')[1];
+                const p1 = appoint.message.split(',')[0]
+                const p2 = appoint.message.split(',')[1]
                 Modal.info({
                     title: '预约成功',
                     content: (
@@ -29,18 +29,18 @@ export default memo(function ItemAppoint(props) {
                             <p>{p2}</p>
                         </>
                     ),
-                    onOk() { window.location.reload(); },
-                });
+                    onOk() { window.location.reload() },
+                })
             } else {
                 Modal.warning({
                     title: '预约失败',
                     content: (
                         <p>{appoint.message}</p>
                     )
-                });
+                })
             }
         } catch (err) {
-            message.error('发生错误了', err);
+            message.error('发生错误了', err)
         }
     }
     const getAppointmentRes = async (timeId) => {
@@ -48,15 +48,15 @@ export default memo(function ItemAppoint(props) {
         allDateData.map(item => {
             if (item.id >= timeId) {
                 if (item.am) {
-                    amMaxNum += item.number - item.count;
+                    amMaxNum += item.number - item.count
                     index = Math.max(item.id)
                 } else {
-                    pmMaxNum += item.number - item.count;
+                    pmMaxNum += item.number - item.count
                 }
             }
         })
         if ((timeId <= index && appointmentNum <= amMaxNum) || (timeId > index && appointmentNum <= pmMaxNum)) {
-            appointReq(timeId);
+            appointReq(timeId)
         } else {
             Modal.confirm({
                 title: '预约失败',
@@ -67,9 +67,9 @@ export default memo(function ItemAppoint(props) {
                     </>
                 ),
                 onOk() {
-                    appointReq(timeId);
+                    appointReq(timeId)
                 }
-            });
+            })
         }
 
     }

@@ -10,8 +10,8 @@ export default memo(function Main(props) {
         // 如果为空说明还没绑定账号
         const getTryUser = async () => {
             // const data = await storageUtils.getUser()
-            const data = await JSON.parse(localStorage.getItem('identity'))
-            alert(JSON.stringify(data))
+            const data = await JSON.parse(sessionStorage.getItem('identity'))
+            // alert(JSON.stringify(data))
             if (data == null) {
                 window.location.href = "#/login"
             }

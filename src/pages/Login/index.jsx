@@ -23,7 +23,7 @@ export default memo(function Login() {
                     const identity = await getIdentity(code) // post
                     if (!identity?.code && identity) {
                         identity.data.user['token'] = identity.data.token
-                        await localStorage.setItem('identity', JSON.stringify(identity.data.user))
+                        await sessionStorage.setItem('identity', JSON.stringify(identity.data.user))
                         history.push('/main')
                     } else {
                         message.error(identity.message)
@@ -36,7 +36,7 @@ export default memo(function Login() {
                 //     // memoryUtils.user = identity.user
                 //     // await storageUtils.saveUser(identity.user)
                 //     identity.data.user['token'] = identity.data.token
-                //     await localStorage.setItem('identity', JSON.stringify(identity.data.user))
+                //     await sessionStorage.setItem('identity', JSON.stringify(identity.data.user))
                 //     history.push('/main')
                 // } else {
                 //     message.error(identity.message)
