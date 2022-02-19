@@ -1,4 +1,4 @@
-import request from "./axios";
+import request from "./axios"
 
 /**
  * @description 预约请求
@@ -26,5 +26,30 @@ export const getWxKey = (options) => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         params: options
+    })
+}
+export const getCancelCount = (options) => {
+    return request({
+        method: 'get',
+        url: '/untrustworthyLog/getCount',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        params: options
+    })
+}
+/**
+ * 取消预约
+ * @param {*} options 
+ * @returns 
+ */
+export const cancelOrder = (options) => {
+    return request({
+        method: 'delete',
+        url: '/appointment/cancelAppoint',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: options
     })
 }

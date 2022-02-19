@@ -29,7 +29,7 @@ export default memo(function Tickets(props) {
                 dataSource={list}
                 renderItem={(item) => (
                     <List.Item>
-                        <Ticket data={item} type={props.index} />
+                        <Ticket updataList={updataList} data={item} type={props.index} />
                     </List.Item>
                 )}
             >

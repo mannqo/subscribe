@@ -54,6 +54,7 @@ const InputForm = ({ id, type, orderNumber, principalId, reservationNumber }) =>
         // userId，前面传过来，预约号不用传
         const userId = JSON.parse(sessionStorage.getItem('identity')).id
         const requestParams = { ...params, userId, orderNumber: parseInt(params.orderNumber) }
+        
         Modal.confirm({
             title: '请确认你的单号无误！',
             maskClosable: true,
@@ -75,7 +76,7 @@ const InputForm = ({ id, type, orderNumber, principalId, reservationNumber }) =>
                     }
                 } catch (error) {
                     console.log(error.message)
-                    message.error('录入失败，请重试！')
+                    message.error(error.message)
                 } finally {
                     setOrderLoading(false)
                 }

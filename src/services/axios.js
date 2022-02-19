@@ -9,6 +9,7 @@ export default function request(option) {
         const token = (sessionStorage.getItem('identity') && JSON.parse(sessionStorage.getItem('identity'))?.token) ?? ''
         const instance = axios.create({
             baseURL: "https://cwcwx.gdut.edu.cn/reservation/api/",
+            // baseURL:"https://www.rdcmy.com/reservation/api",
             timeout: 10000,
             headers: {
                 "Access-Control-Allow-Origin": "*",
