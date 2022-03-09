@@ -12,6 +12,7 @@ export default withRouter(function Ticket(props) {
     let timeArr = time.split('--').map(v => { return v.slice(0, -3) })
 
     async function showModal() {
+        // 失约次数
         let cancelCount
         if (props.type === 1) {
             cancelCount = await getCancelCount({ id })
@@ -21,16 +22,17 @@ export default withRouter(function Ticket(props) {
             title: '你确定取消你的预约吗？',
             content: (
                 <>
-                    排队号: {reservationNumber}
+                    {/* 排队号: {reservationNumber} */}
+                    如果在预约前一天 16：00 之后取消预约，会记录失约噢！
                     {props.type ? <br /> : ''}
-                    {props.type ? `失约 2 次会记录黑名单噢！你已经失约了 ${cancelCount.data[0]} 次` : ''}
+                    {props.type ? `失约超过 2 次会记录黑名单噢！你已经失约了 ${cancelCount.data[0]} 次` : ''}
                 </>
             ),
             async onOk() {
                 const userId = JSON.parse(sessionStorage.getItem('identity')).id
                 const cancelData = await cancelOrder({ userId, id })
                 if (cancelData.code === 0) {
-                    let data = await getTickets(props.index, userId)
+                    let data = await getTickets(props.type, userId)
                     props.updataList(data.data)
                 }
                 message.info(cancelData.message)

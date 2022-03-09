@@ -46,6 +46,7 @@ export default memo(function Login() {
             }
         }
         getTry()
+        // DEV 
         // sessionStorage.setItem('identity', JSON.stringify({ id: "1", token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJudW1iZXIiOiIxIiwiZ210TW9kaWZpZWQiOiJUdWUgTm92IDIzIDAwOjI1OjQ2IENTVCAyMDIxIiwic2VyaWFsVmVyc2lvblVJRCI6IjEiLCJvcGVuaWQiOiIxMTEiLCJuYW1lIjoiMSIsImlkIjoiMSIsImdtdENyZWF0ZSI6IlN1biBOb3YgMTQgMjM6MTY6MjkgQ1NUIDIwMjEiLCJleHAiOjE2NDUzMzU2NzJ9.Pe-PR21B55x4GjN1v1IoeQ1bqFcOO068hiq4lyY-r3U" }))
 
     }, [])
