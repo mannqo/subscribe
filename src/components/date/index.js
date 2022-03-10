@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import { DateWrapper } from './style'
-import { NavLink,useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { getSubscribeDay } from '../../services/date'
 import { initialDayData } from '../../mock/local-data'
 import { message } from 'antd'
@@ -8,25 +8,27 @@ import { message } from 'antd'
 export default memo(function Date(props) {
     const { changeDay } = props
     const [sevenDay, setSevenDay] = useState(' ')
-    const [data, setData] = useState(initialDayData)
-    const whichDay = window.location.href[window.location.href.length - 1]
-    // eslint-disable-next-line
-    useEffect(async () => {
-        try {
-            if (whichDay !== 'n') {
-                changeDay(whichDay)
-                const getSevenDay = await getSubscribeDay()
-                const data = getSevenDay.data.splice(0)
-                setSevenDay(data[0].day + '-' + data[6].day)
-                data.map(item => item.day = item.day.slice(5, 10))
-                setData(data)
+    const [data, setData] = useState(initialDayData);
+    const whichDay = window.location.href[window.location.href.length - 1];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (!isNaN(whichDay)) {
+                    changeDay(whichDay)
+                    const getSevenDay = await getSubscribeDay();
+                    const { data } = getSevenDay;
+                    setSevenDay(data[0].day + ' - ' + data[6].day)
+                    data.map(item => item.day = item.day.slice(5, 10))
+                    setData(data)
+                }
+            } catch (err) {
+                console.log(err);
+                message.error('发生错误了', err)
             }
-
-        } catch (err) {
-            message.error('发生错误了', err)
         }
-
-    }, [whichDay]) // eslint-disable-line
+        fetchData();
+    }, [whichDay])
 
     return (
         <DateWrapper>

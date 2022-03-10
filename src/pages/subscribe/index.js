@@ -2,37 +2,38 @@ import List from '../../components/list';
 import Date from '../../components/date';
 import React, { memo, useState } from 'react';
 import { getSubscribeTime } from '../../services/date';
-import { initialAllDateData } from '../../mock/local-data';
 import { message } from 'antd';
 
 
 export default memo(function Subscribe() {
-    const [timeState, setTimeState] = useState({ allDateData: initialAllDateData, date: '2021.1.1', day: 1, loading: false });
+    const [date, setDate] = useState('2021.1.1');
+    const [loading, setLoading] = useState(false);
+    const [entireDates, setEntireDates] = useState([]);
     const changeDay = async (day) => {
         try {
-            setTimeState(state => ({ ...state, loading: true }));
+            setLoading(true);
             const getTime = await getSubscribeTime(day);
             const { orderTimes, date } = getTime.data;
-            // eslint-disable-next-line 
-            orderTimes.map(item => {
+            orderTimes.forEach(item => {
                 item.time = item.start.slice(0, 5) + '-' + item.end.slice(0, 5);
                 item.key = item.id;
-                if (!(item.number - item.count)) item.status = 0;
-                else item.status = 1;
+                item.status = (item.number - item.count) ? 1 : 0;
                 item.remain = '余号' + (item.number - item.count);
             })
-            setTimeState({ allDateData: orderTimes, date, day, loading: false });
-
+            setEntireDates(orderTimes);
+            setDate(date);
+            setLoading(false);
         } catch (err) {
-            setTimeState({ allDateData: initialAllDateData, date: '2021.1.1', day: 1, loading: false });
-            message.error('发生错误了', err);
+            setLoading(false);
+            setEntireDates([])
+            message.info('此时间段尚未开放');
         }
     }
 
     return (
         <>
             <Date changeDay={changeDay} />
-            <List timeState={timeState} />
+            <List entireDates={entireDates} loading={loading} date={date} />
         </>
     )
 })

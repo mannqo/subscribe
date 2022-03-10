@@ -1,21 +1,21 @@
 import React, { memo, useState } from 'react'
 import { Form, InputNumber, Button, Modal, message } from 'antd'
 import { getAppointment } from '../../../services/subscribe'
-import storageUtils from '../../../utils/storageUtils'
 
 export default memo(function ItemAppoint(props) {
-    const { status, item, date, allDateData } = props
-    const [appointmentNum, setAppointmentNum] = useState(0)
+    const { status, item, date, entireDates } = props
+    const [appointmentNum, setAppointmentNum] = useState(0);
+    const [value, setValue] = useState(0);
     let amMaxNum = 0  // 早上最多可以预约个数
     let pmMaxNum = 0  // 晚上最多可以预约个数
     let index = 0   // 是否为am
     // 获取预约个数
     const getAppointmentNum = (num) => {
-        setAppointmentNum(num)
+        setValue(num); 
+        setAppointmentNum(num);
     }
     const appointReq = async (timeId) => {
         try {
-            // const userId = storageUtils.getUser().id;
             const userId = JSON.parse(sessionStorage.getItem('identity')).id
             const appoint = await getAppointment(userId, timeId, date, appointmentNum)
             if (!appoint.code) {
@@ -44,8 +44,7 @@ export default memo(function ItemAppoint(props) {
         }
     }
     const getAppointmentRes = async (timeId) => {
-        // eslint-disable-next-line 
-        allDateData.map(item => {
+        for (let item of entireDates) { 
             if (item.id >= timeId) {
                 if (item.am) {
                     amMaxNum += item.number - item.count
@@ -54,32 +53,33 @@ export default memo(function ItemAppoint(props) {
                     pmMaxNum += item.number - item.count
                 }
             }
-        })
-        if ((timeId <= index && appointmentNum <= amMaxNum) || (timeId > index && appointmentNum <= pmMaxNum)) {
-            appointReq(timeId)
-        } else {
-            Modal.confirm({
-                title: '预约失败',
-                content: (
-                    < >
-                        <p>这个时间段你最多只能预约{timeId <= index ? amMaxNum : pmMaxNum}个号</p>
-                        <p>确定要预约吗?</p>
-                    </>
-                ),
-                onOk() {
-                    appointReq(timeId)
-                }
-            })
         }
-
+        Modal.confirm({
+            title: '确定要预约吗？',
+            content: (
+                < >
+                    <p>这个时间段你最多只能预约{timeId <= index ? amMaxNum : pmMaxNum}个号</p>
+                    <p>当前你预约的个数为{value}个</p>
+                    <p>确定要预约吗?</p>
+                </>
+            ),
+            onOk() {
+                appointReq(timeId)
+            }
+        })
     }
 
     return (
         <>
             <Form className="form-list">
                 <Form.Item className="form-item">
-                    <InputNumber onChange={getAppointmentNum} style={{ display: status === 1 ? 'block' : 'none' }}
-                        className="appointmentNum" min={0} max={10} defaultValue={0} />
+                    <InputNumber
+                        onChange={getAppointmentNum}
+                        style={{ display: status === 1 ? 'block' : 'none' }}
+                        className="appointmentNum"
+                        min={0}
+                        max={5}
+                        value={value} />
                 </Form.Item>
                 <Form.Item className="form-item">
                     <Button onClick={() => getAppointmentRes(item.id)} danger={status} disabled={!status}>{status === 1 ? '预约' : '已完'}</Button>

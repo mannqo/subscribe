@@ -6,16 +6,11 @@ import ItemAppoint from './item-appoint';
 
 
 export default memo(function List(props) {
-    const { timeState } = props;
-    const { date, day, loading } = timeState;
-    let { allDateData } = timeState;
+    const { date, loading } = props;
+    let { entireDates } = props;
     let index = 0;
     try {
-        allDateData = allDateData === null ? [] : allDateData;
-        // eslint-disable-next-line  
-        allDateData.map(item => {
-            if (item.am) index++;
-        })
+        for (let item of entireDates) { item.am && index++; }
     } catch (err) {
         message.error('出错了');
     }
@@ -29,7 +24,7 @@ export default memo(function List(props) {
             dataIndex: 'status',
             render: (status, item) => {
                 return (
-                    <ItemAppoint status={status} item={item} date={date} day={day} allDateData={allDateData} />
+                    <ItemAppoint status={status} item={item} date={date} entireDates={entireDates} />
                 )
             }
         },
@@ -49,12 +44,13 @@ export default memo(function List(props) {
     return (
         <>
             <TableWrapper>
+                <span style={{ color: '#999', fontSize: '16px' }}>温馨提醒：未预约成功的师生可以到现场办理报销，现场办理方式不变。</span>
                 <h3 className='listTitle'>上午</h3>
-                <Table className="table-list" loading={loading} columns={columns} dataSource={allDateData.slice(0, index)} />
+                <Table className="table-list" loading={loading} columns={columns} dataSource={entireDates.slice(0, index)} />
             </TableWrapper>
             <TableWrapper>
                 <h3 className='listTitle'>下午</h3>
-                <Table className="table-list" loading={loading} columns={columns} dataSource={allDateData.slice(index, allDateData.length)} />
+                <Table className="table-list" loading={loading} columns={columns} dataSource={entireDates.slice(index, entireDates.length)} />
             </TableWrapper>
         </>
     )
