@@ -1,79 +1,51 @@
 import React, { memo } from 'react';
-import { Table, Tag, Space } from 'antd';
+import { Table, InputNumber, Space, Button } from 'antd';
 import { TableWrapper } from './style';
+import { morningDateData, afternoonDateData } from '../../mock/local-data';
 
 const columns = [
     {
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'time',
+        key: 'time',
     },
     {
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        key: 'tags',
-        dataIndex: 'tags',
-        render: tags => (
+        dataIndex: 'status',
+        key: 'status',
+        render: status => (
             <>
-                {tags.map(tag => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
+                <Space>
+                    <InputNumber className="subscribeNum" min={1} max={10} defaultValue={1} />
+                    <Button className="rob-button" type="primary" danger>抢</Button>
+                </Space>
             </>
-        ),
+        )
     },
     {
-        key: 'action',
-        render: (text, record) => (
-            <Space size="middle">
-                {/* <a>Invite {record.name}</a>
-                <a>Delete</a> */}
-            </Space>
-        ),
-    },
+        key: 'remain',
+        dataIndex: 'remain',
+        render: remain => {
+            return (
+                <>
+                    <Button type="primary" block disabled className="list-remain">{remain}</Button>
+                </>
+            )
+
+        }
+    }
 ];
 
-const data = [
-    {
-        key: '1',
-        name: '8:30-9:00',
-        age: '抢',
-        tags: ['余号10'],
-    },
-    {
-        key: '2',
-        name: '9:00-9:30',
-        age: '抢',
-        tags: ['余号10'],
-    },
-    {
-        key: '3',
-        name: '9:30-10:00',
-        age: '抢',
-        tags: ['余号10'],
-    },
-];
 
 
 export default memo(function List() {
     return (
         <div>
             <TableWrapper>
-                <h2>上午</h2>
-                <Table columns={columns} dataSource={data} />
+                <h3 className='listTitle'>上午</h3>
+                <Table className="table-list" columns={columns} dataSource={morningDateData} />
             </TableWrapper>
             <TableWrapper>
-                <h2>下午</h2>
-                <Table columns={columns} dataSource={data} />
+                <h3 className='listTitle'>下午</h3>
+                <Table className="table-list" columns={columns} dataSource={afternoonDateData} />
             </TableWrapper>
         </div>
     )
